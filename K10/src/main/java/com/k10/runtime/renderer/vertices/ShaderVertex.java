@@ -1,12 +1,6 @@
-package com.k10.runtime.graphics.renderer.vertices;
+package com.k10.runtime.renderer.vertices;
 
 import java.nio.FloatBuffer;
-
-import org.joml.Vector2f;
-import org.joml.Vector4f;
-
-import com.k10.runtime.graphics.renderer.vertices.Vertex;
-import com.k10.util.GlueList;
 
 public class ShaderVertex extends Vertex {
 	protected float[] color;

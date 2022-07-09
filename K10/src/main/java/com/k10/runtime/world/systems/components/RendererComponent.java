@@ -2,11 +2,11 @@ package com.k10.runtime.world.systems.components;
 
 import java.util.List;
 
-import com.k10.runtime.graphics.renderer.Renderable;
-import com.k10.runtime.graphics.renderer.shaders.Shader;
-import com.k10.runtime.graphics.renderer.shaders.VertexShader;
-import com.k10.runtime.graphics.renderer.vertices.ShaderData;
-import com.k10.runtime.graphics.renderer.vertices.Vertex;
+import com.k10.runtime.renderer.Renderable;
+import com.k10.runtime.renderer.shaders.Shader;
+import com.k10.runtime.renderer.shaders.VertexShader;
+import com.k10.runtime.renderer.vertices.ShaderData;
+import com.k10.runtime.renderer.vertices.Vertex;
 import com.k10.runtime.world.systems.Component;
 
 /**

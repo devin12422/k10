@@ -1,4 +1,4 @@
-package com.k10.runtime.graphics.renderer;
+package com.k10.runtime.renderer;
 
 import static org.lwjgl.opengl.GL30.*;
 

@@ -34,7 +34,7 @@ import static org.lwjgl.system.MemoryUtil.NULL;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.opengl.GL;
 
-import com.k10.runtime.graphics.renderer.BatchedRenderer;
+import com.k10.runtime.renderer.BatchedRenderer;
 
 public class GlfwWindow extends WorldWindow {
 	private long glfwWindow;

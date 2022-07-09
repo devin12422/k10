@@ -1,4 +1,4 @@
-package com.k10.runtime.graphics.renderer.vertices;
+package com.k10.runtime.renderer.vertices;
 
 import org.joml.Vector2f;
 

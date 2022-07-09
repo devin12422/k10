@@ -1,11 +1,10 @@
-package com.k10.runtime.graphics.renderer.shaders;
+package com.k10.runtime.renderer.shaders;
 
 import static org.lwjgl.opengl.GL11.GL_FALSE;
 import static org.lwjgl.opengl.GL20.*;
 
-import com.k10.runtime.graphics.renderer.batches.RenderBatch;
-import com.k10.runtime.graphics.renderer.shaders.Shader;
-import com.k10.runtime.graphics.renderer.vertices.Vertex;
+import com.k10.runtime.renderer.batches.RenderBatch;
+import com.k10.runtime.renderer.vertices.Vertex;
 
 public class VertexShader<V extends Vertex> extends Shader<V> {
 	protected String vertexSource;

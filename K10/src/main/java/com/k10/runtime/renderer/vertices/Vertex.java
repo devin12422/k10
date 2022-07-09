@@ -1,4 +1,4 @@
-package com.k10.runtime.graphics.renderer.vertices;
+package com.k10.runtime.renderer.vertices;
 
 import java.nio.FloatBuffer;
 import java.util.concurrent.locks.ReentrantLock;

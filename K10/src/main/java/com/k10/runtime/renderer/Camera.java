@@ -1,4 +1,4 @@
-package com.k10.runtime.graphics;
+package com.k10.runtime.renderer;
 
 import org.joml.Matrix4f;
 import org.joml.Vector2f;

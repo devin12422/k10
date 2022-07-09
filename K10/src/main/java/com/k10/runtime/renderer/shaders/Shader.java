@@ -1,4 +1,4 @@
-package com.k10.runtime.graphics.renderer.shaders;
+package com.k10.runtime.renderer.shaders;
 
 import static org.lwjgl.opengl.GL11.GL_FALSE;
 import static org.lwjgl.opengl.GL20.GL_COMPILE_STATUS;
@@ -39,9 +39,8 @@ import org.joml.Vector3f;
 import org.joml.Vector4f;
 import org.lwjgl.BufferUtils;
 
-import com.k10.runtime.graphics.renderer.batches.RenderBatch;
-import com.k10.runtime.graphics.renderer.shaders.Shader;
-import com.k10.runtime.graphics.renderer.vertices.ShaderData;
+import com.k10.runtime.renderer.shaders.Shader;
+import com.k10.runtime.renderer.vertices.ShaderData;
 
 public abstract class Shader<S extends ShaderData> {
 	protected int shaderProgramID;

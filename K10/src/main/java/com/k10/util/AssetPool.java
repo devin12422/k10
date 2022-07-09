@@ -4,9 +4,9 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.k10.runtime.graphics.renderer.Texture;
-import com.k10.runtime.graphics.renderer.shaders.VertexShader;
-import com.k10.runtime.graphics.renderer.vertices.Vertex;
+import com.k10.runtime.renderer.Texture;
+import com.k10.runtime.renderer.shaders.VertexShader;
+import com.k10.runtime.renderer.vertices.Vertex;
 import com.k10.util.AssetPool;
 
 public class AssetPool {

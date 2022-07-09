@@ -1,25 +1,20 @@
-package com.k10.runtime.graphics.renderer;
+package com.k10.runtime.renderer;
 
 import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.glClear;
 import static org.lwjgl.opengl.GL11.glClearColor;
-import static org.lwjgl.opengl.GL30.GL_FRAMEBUFFER;
-import static org.lwjgl.opengl.GL30.glBindFramebuffer;
-import static org.lwjgl.opengl.GL30.glGenFramebuffers;
-
 import java.util.Map;
 
 import com.google.common.collect.MultimapBuilder.SetMultimapBuilder;
-import com.k10.runtime.graphics.renderer.Framebuffer;
-import com.k10.runtime.graphics.renderer.Renderer;
-import com.k10.runtime.graphics.renderer.batches.RenderBatch;
-import com.k10.runtime.graphics.renderer.shaders.VertexShader;
+import com.k10.runtime.renderer.batches.RenderBatch;
+import com.k10.runtime.renderer.shaders.VertexShader;
+import com.k10.runtime.windows.GlfwWindow;
 import com.k10.runtime.world.systems.components.RendererComponent;
 import com.google.common.collect.SetMultimap;
 
 public class BatchedRenderer extends Renderer {
 	protected Map<Integer, Framebuffer> buffers;
-
+	protected GlfwWindow window;
 	public static final int DATA_CAP = 1024;
 	protected SetMultimap<Integer, RenderBatch<?, ?>> batches;
 
@@ -98,6 +93,9 @@ public class BatchedRenderer extends Renderer {
 		buffers.get(i).unbind();
 		System.out.println("buffer" + i + " unbound");
 
+	}
+	public GlfwWindow getWindow() {
+		return this.window;
 	}
 
 }

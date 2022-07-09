@@ -1,6 +1,6 @@
 package com.k10.runtime.windows;
 
-import com.k10.runtime.graphics.renderer.Renderer;
+import com.k10.runtime.renderer.Renderer;
 import com.k10.runtime.world.World;
 
 public class WorldWindow extends Window{
@@ -13,6 +13,9 @@ public class WorldWindow extends Window{
 	}
 	public void init() {
 		
+	}
+	public World getWorld() {
+		return this.world;
 	}
 	@Override
 	public void loop() {

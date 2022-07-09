@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.google.common.collect.MultimapBuilder;
 import com.google.common.collect.SetMultimap;
-import com.k10.runtime.graphics.renderer.vertices.Vertex;
+import com.k10.runtime.renderer.vertices.Vertex;
 
 public class TriangulatedBody<V extends Vertex> extends Body<V> {
 	SetMultimap<Integer, V> triangles;

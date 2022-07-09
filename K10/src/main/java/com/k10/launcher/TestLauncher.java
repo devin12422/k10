@@ -8,7 +8,6 @@ public class TestLauncher extends Launcher {
 	}
 	@Override
 	public void launch() {
-		instance = Instance.get();
 		instance.init();
 //		instance.initScene(new );
 

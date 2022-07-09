@@ -3,8 +3,8 @@ package com.k10.runtime.world;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.k10.runtime.graphics.Camera;
-import com.k10.runtime.graphics.renderer.Renderer;
+import com.k10.runtime.renderer.Camera;
+import com.k10.runtime.renderer.Renderer;
 import com.k10.runtime.windows.Window;
 import com.k10.runtime.world.systems.Actor;
 

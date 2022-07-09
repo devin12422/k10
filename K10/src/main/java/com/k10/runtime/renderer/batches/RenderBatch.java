@@ -1,14 +1,15 @@
-package com.k10.runtime.graphics.renderer.batches;
+package com.k10.runtime.renderer.batches;
 
 import java.nio.FloatBuffer;
 import java.util.ArrayList;
 import com.google.common.collect.Lists;
 import com.google.common.collect.MultimapBuilder;
 import com.google.common.collect.SetMultimap;
-import com.k10.runtime.graphics.renderer.BatchedRenderer;
-import com.k10.runtime.graphics.renderer.shaders.VertexShader;
-import com.k10.runtime.graphics.renderer.vertices.ShaderData;
-import com.k10.runtime.graphics.renderer.vertices.Vertex;
+import com.k10.runtime.renderer.BatchedRenderer;
+import com.k10.runtime.renderer.Camera;
+import com.k10.runtime.renderer.shaders.VertexShader;
+import com.k10.runtime.renderer.vertices.ShaderData;
+import com.k10.runtime.renderer.vertices.Vertex;
 import com.k10.runtime.world.systems.components.RendererComponent;
 
 import static org.lwjgl.opengl.GL15.*;
@@ -23,6 +24,7 @@ public class RenderBatch<V extends Vertex, S extends VertexShader<V>> {
 	protected ArrayList<RendererComponent<S>> components;
 	private boolean hasRoom;
 	private int vaoID, vboID;
+	protected Camera camera;
 	protected BatchedRenderer renderer;
 
 	public RenderBatch(S shader) {
@@ -49,6 +51,7 @@ public class RenderBatch<V extends Vertex, S extends VertexShader<V>> {
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices, GL_STATIC_DRAW);
 
 		shader.enableAttribPointers();
+		
 	}
 
 	private int[] generateIndices() {
@@ -71,8 +74,9 @@ public class RenderBatch<V extends Vertex, S extends VertexShader<V>> {
 			glBindBuffer(GL_ARRAY_BUFFER, vboID);
 			glBufferSubData(GL_ARRAY_BUFFER, 0, t);
 		}
-		shader.uploadMat4f("uProjection", renderer.getWindow().getScene().camera().getProjectionMatrix());
-		shader.uploadMat4f("uView", renderer.getWindow().getScene().camera().getViewMatrix());
+		this.camera = renderer.getWindow().getWorld().camera();
+		shader.uploadMat4f("uProjection", camera.getProjectionMatrix());
+		shader.uploadMat4f("uView", camera.getViewMatrix());
 		glBindVertexArray(vaoID);
 		shader.enableAttribArrays();
 		glDrawElements(GL_TRIANGLES, this.datagroups.values().size(), GL_UNSIGNED_INT, 0);
