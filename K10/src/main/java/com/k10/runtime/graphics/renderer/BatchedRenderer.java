@@ -7,6 +7,8 @@ import static org.lwjgl.opengl.GL30.GL_FRAMEBUFFER;
 import static org.lwjgl.opengl.GL30.glBindFramebuffer;
 import static org.lwjgl.opengl.GL30.glGenFramebuffers;
 
+import java.util.Map;
+
 import com.google.common.collect.MultimapBuilder.SetMultimapBuilder;
 import com.k10.runtime.graphics.renderer.Framebuffer;
 import com.k10.runtime.graphics.renderer.Renderer;
@@ -16,6 +18,8 @@ import com.k10.runtime.world.systems.components.RendererComponent;
 import com.google.common.collect.SetMultimap;
 
 public class BatchedRenderer extends Renderer {
+	protected Map<Integer, Framebuffer> buffers;
+
 	public static final int DATA_CAP = 1024;
 	protected SetMultimap<Integer, RenderBatch<?, ?>> batches;
 
@@ -70,6 +74,17 @@ public class BatchedRenderer extends Renderer {
 	}
 
 	@Override
+	public void render() {
+		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+		glClear(GL_COLOR_BUFFER_BIT);
+		buffers.keySet().forEach((i) -> {
+			renderBuffer(i);
+		});
+//				int fbo = glGenFramebuffers();
+//				glBindFramebuffer(GL_FRAMEBUFFER, fbo);
+	}
+
+	@Override
 	public void renderBuffer(int i) {
 		buffers.get(i).bind();
 		System.out.println("buffer" + i + " bound");
@@ -84,4 +99,5 @@ public class BatchedRenderer extends Renderer {
 		System.out.println("buffer" + i + " unbound");
 
 	}
+
 }

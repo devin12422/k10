@@ -7,20 +7,22 @@ import java.nio.file.StandardOpenOption;
 import java.util.HashSet;
 import java.util.Properties;
 
+import com.google.common.collect.Sets;
 import com.k10.runtime.Instance;
-import com.k10.runtime.events.Event;
-import com.k10.runtime.events.EventSystem;
-import com.k10.runtime.events.Observer;
-import com.k10.runtime.windows.scenes.Scene;
+import com.k10.runtime.windows.Window;
+import com.k10.runtime.world.World;
 import com.k10.runtime.world.systems.Actor;
+import com.k10.runtime.world.systems.events.Event;
+import com.k10.runtime.world.systems.events.EventSystem;
+import com.k10.runtime.world.systems.events.Observer;
 
-public class Instance implements Observer {
+public abstract class Instance implements Observer {
 	private static Instance instance = null;
-	private HashSet<Scene> scenes;
+	private HashSet<Window> windows;
 //	protected Properties properties;
 
 	private Instance() {
-		scenes = new HashSet<Scene>();
+		windows = Sets.newHashSet();
 		EventSystem.addObserver(this);
 
 	}
@@ -33,17 +35,8 @@ public class Instance implements Observer {
 //		}
 	}
 
-	public void initScene(Scene scene) {
-		scenes.add(scene);
-		scene.start();
-	}
-
-	public static Instance get() {
-		if (Instance.instance == null) {
-			Instance.instance = new Instance();
-		}
-
-		return Instance.instance;
+	public void addWindow(Window window) {
+		windows.add(window);
 	}
 
 	@Override

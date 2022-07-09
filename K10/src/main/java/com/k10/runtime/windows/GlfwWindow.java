@@ -23,15 +23,12 @@ import static org.lwjgl.glfw.GLFW.glfwWindowHint;
 import static org.lwjgl.glfw.GLFW.glfwWindowShouldClose;
 import static org.lwjgl.opengl.GL11.GL_BLEND;
 import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
-import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.GL_ONE;
 import static org.lwjgl.opengl.GL11.GL_ONE_MINUS_SRC_ALPHA;
 import static org.lwjgl.opengl.GL11.glBlendFunc;
 import static org.lwjgl.opengl.GL11.glClear;
 import static org.lwjgl.opengl.GL11.glClearColor;
-import static org.lwjgl.opengl.GL11.glDisable;
 import static org.lwjgl.opengl.GL11.glEnable;
-import static org.lwjgl.opengl.GL11.glViewport;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
 import org.lwjgl.glfw.GLFWErrorCallback;
@@ -39,13 +36,12 @@ import org.lwjgl.opengl.GL;
 
 import com.k10.runtime.graphics.renderer.BatchedRenderer;
 
-public class TestWindow extends Window {
+public class GlfwWindow extends WorldWindow {
 	private long glfwWindow;
 	protected BatchedRenderer renderer;
 
-	public TestWindow(int width, int height, String title) {
-		super(width, height, title);
-		renderer = new BatchedRenderer();
+	public GlfwWindow(int width, int height, String title) {
+		super(width, height, title, new BatchedRenderer());
 	}
 
 	public void init() {
@@ -82,14 +78,6 @@ public class TestWindow extends Window {
 //		glViewport(0, 0, 3840, 2160);
 	}
 
-	public void run() {
-		super.run();
-		glfwFreeCallbacks(glfwWindow);
-		glfwDestroyWindow(glfwWindow);
-		glfwTerminate();
-		glfwSetErrorCallback(null).free();
-	}
-
 	public void loop() {
 		float beginTime = (float) glfwGetTime();
 		float endTime;
@@ -101,17 +89,23 @@ public class TestWindow extends Window {
 			glClearColor(0, 0, 0, 0);
 			glClear(GL_COLOR_BUFFER_BIT);
 			if (dt >= 0) {
-				currentScene.update(dt);
+				world.update(dt);
 
-				currentScene.render();
+				renderer.render();
 			}
 
 			glfwSwapBuffers(glfwWindow);
-
 			endTime = (float) glfwGetTime();
 			dt = endTime - beginTime;
 			beginTime = endTime;
 		}
 	}
 
+	public void destroy() {
+		super.destroy();
+		glfwFreeCallbacks(glfwWindow);
+		glfwDestroyWindow(glfwWindow);
+		glfwTerminate();
+		glfwSetErrorCallback(null).free();
+	}
 }

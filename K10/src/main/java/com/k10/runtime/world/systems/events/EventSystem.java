@@ -1,10 +1,10 @@
-package com.k10.runtime.events;
+package com.k10.runtime.world.systems.events;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.k10.runtime.events.Observer;
 import com.k10.runtime.world.systems.Actor;
+import com.k10.runtime.world.systems.events.Observer;
 
 public class EventSystem {
 	private static List<Observer> observers = new ArrayList<>();

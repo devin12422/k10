@@ -1,4 +1,4 @@
-package com.k10.runtime.windows.scenes;
+package com.k10.runtime.world;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,16 +8,16 @@ import com.k10.runtime.graphics.renderer.Renderer;
 import com.k10.runtime.windows.Window;
 import com.k10.runtime.world.systems.Actor;
 
-public abstract class Scene {
-
+public abstract class World {
 	protected Renderer renderer;
-	protected Window window;
 	protected Camera camera;
 	private boolean isRunning = false;
 	protected List<Actor> gameObjects = new ArrayList<>();
 
-	public Scene(Window window) {
-		this.window = window;
+	public World() {
+	}
+	public void setRenderer(Renderer renderer) {
+		this.renderer = renderer;
 	}
 
 	public void start() {
@@ -37,12 +37,6 @@ public abstract class Scene {
 	}
 
 	public abstract void update(float dt);
-
-	public void render() {
-		if (isRunning) {
-			renderer.render();
-		}
-	}
 
 	public Camera camera() {
 		return this.camera;
