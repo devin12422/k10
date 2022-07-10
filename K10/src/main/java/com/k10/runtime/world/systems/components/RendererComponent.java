@@ -1,14 +1,9 @@
 package com.k10.runtime.world.systems.components;
 
-import java.util.List;
-
 import com.k10.runtime.renderer.Renderable;
 import com.k10.runtime.renderer.shaders.Shader;
-import com.k10.runtime.renderer.shaders.VertexShader;
 import com.k10.runtime.renderer.vertices.ShaderData;
-import com.k10.runtime.renderer.vertices.Vertex;
 import com.k10.runtime.world.systems.Component;
-import com.k10.util.AssetPool;
 
 /**
  * 
@@ -20,6 +15,7 @@ public class RendererComponent extends Component {
 	private Renderable target;
 	private Shader shader;
 	public boolean isDirty;
+
 	public RendererComponent(Renderable target, Shader shader) {
 		this.shader = shader;
 		this.target = target;

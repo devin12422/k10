@@ -14,15 +14,11 @@ import com.k10.runtime.world.systems.components.RendererComponent;
 public abstract class Renderer {
 	protected int width;
 	protected int height;
-
-	public Renderer() {
-	}
+	protected Framebuffer framebuffer;
 
 	public abstract void render();
 
-
-
-	public abstract void renderBuffer(int i);
+	public abstract void renderBuffer();
 
 	public abstract void add(RendererComponent r);
 
