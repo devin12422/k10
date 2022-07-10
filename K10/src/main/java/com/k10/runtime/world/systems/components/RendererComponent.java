@@ -8,6 +8,7 @@ import com.k10.runtime.renderer.shaders.VertexShader;
 import com.k10.runtime.renderer.vertices.ShaderData;
 import com.k10.runtime.renderer.vertices.Vertex;
 import com.k10.runtime.world.systems.Component;
+import com.k10.util.AssetPool;
 
 /**
  * 
@@ -15,13 +16,13 @@ import com.k10.runtime.world.systems.Component;
  *
  * @param <S>
  */
-public class RendererComponent<S extends Shader<?>> extends Component {
-	private Renderable<?> target;
-	private S shader;
+public class RendererComponent extends Component {
+	private Renderable target;
+	private Shader shader;
 	public boolean isDirty;
-
-	public RendererComponent(S shader) {
+	public RendererComponent(Renderable target, Shader shader) {
 		this.shader = shader;
+		this.target = target;
 		this.isDirty = true;
 	}
 
@@ -43,7 +44,7 @@ public class RendererComponent<S extends Shader<?>> extends Component {
 
 	}
 
-	public Shader<?> getShader() {
+	public Shader getShader() {
 		return this.shader;
 	}
 

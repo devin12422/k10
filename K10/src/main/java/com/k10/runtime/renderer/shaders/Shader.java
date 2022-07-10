@@ -1,37 +1,12 @@
 package com.k10.runtime.renderer.shaders;
 
 import static org.lwjgl.opengl.GL11.GL_FALSE;
-import static org.lwjgl.opengl.GL20.GL_COMPILE_STATUS;
-import static org.lwjgl.opengl.GL20.GL_FRAGMENT_SHADER;
-import static org.lwjgl.opengl.GL20.GL_INFO_LOG_LENGTH;
-import static org.lwjgl.opengl.GL20.GL_LINK_STATUS;
-import static org.lwjgl.opengl.GL20.GL_VERTEX_SHADER;
-import static org.lwjgl.opengl.GL20.glAttachShader;
-import static org.lwjgl.opengl.GL20.glCompileShader;
-import static org.lwjgl.opengl.GL20.glCreateProgram;
-import static org.lwjgl.opengl.GL20.glCreateShader;
-import static org.lwjgl.opengl.GL20.glGetProgramInfoLog;
 import static org.lwjgl.opengl.GL20.*;
-import static org.lwjgl.opengl.GL20.glGetShaderInfoLog;
-import static org.lwjgl.opengl.GL20.glGetShaderi;
-import static org.lwjgl.opengl.GL20.glGetUniformLocation;
-import static org.lwjgl.opengl.GL20.glLinkProgram;
-import static org.lwjgl.opengl.GL20.glShaderSource;
-import static org.lwjgl.opengl.GL20.glUniform1f;
-import static org.lwjgl.opengl.GL20.glUniform1i;
-import static org.lwjgl.opengl.GL20.glUniform2f;
-import static org.lwjgl.opengl.GL20.glUniform3f;
-import static org.lwjgl.opengl.GL20.glUniform4f;
-import static org.lwjgl.opengl.GL20.glUniformMatrix3fv;
-import static org.lwjgl.opengl.GL20.glUniformMatrix4fv;
-import static org.lwjgl.opengl.GL20.glUseProgram;
 
 import java.io.IOException;
 import java.nio.FloatBuffer;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-
 import org.joml.Matrix3f;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
@@ -40,9 +15,8 @@ import org.joml.Vector4f;
 import org.lwjgl.BufferUtils;
 
 import com.k10.runtime.renderer.shaders.Shader;
-import com.k10.runtime.renderer.vertices.ShaderData;
 
-public abstract class Shader<S extends ShaderData> {
+public abstract class Shader {
 	protected int shaderProgramID;
 	protected boolean beingUsed = false;
 	protected String[] source;
@@ -60,19 +34,13 @@ public abstract class Shader<S extends ShaderData> {
 		try {
 			String source = new String(Files.readAllBytes(Paths.get(filepath)));
 			this.source = source.split("(#type)( )+([a-zA-Z]+)");
-//			int index = source.indexOf("#type") + 6;
-//			int eol = source.indexOf("\r\n", index);
-//			String firstPattern = source.substring(index, eol).trim();
-//			index = source.indexOf("#type", eol) + 6;
-//			eol = source.indexOf("\r\n", index);
-//			String secondPattern = source.substring(index, eol).trim();
 		} catch (IOException e) {
 			e.printStackTrace();
 			assert false : "Error: Could not open file for shader: '" + filepath + "'";
 		}
 	}
 
-	public boolean equals(Shader<S> o) {
+	public boolean equals(Shader o) {
 		return o.getFilepath() == this.filepath;
 //		public boolean equals(Object obj) {
 //		    if (obj instanceof Integer) {
@@ -85,9 +53,11 @@ public abstract class Shader<S extends ShaderData> {
 	public String getFilepath() {
 		return this.filepath;
 	}
+
 	public int getDataSize() {
 		return this.dataSize;
 	}
+
 	public abstract void start();
 
 	protected void compileSource() {
@@ -177,6 +147,18 @@ public abstract class Shader<S extends ShaderData> {
 		glUniform1i(varLocation, val);
 	}
 
+	public void uploadTexture(String varName, int slot) {
+		int varLocation = glGetUniformLocation(shaderProgramID, varName);
+		use();
+		glUniform1i(varLocation, slot);
+	}
+
+	public void uploadIntArray(String varName, int[] array) {
+		int varLocation = glGetUniformLocation(shaderProgramID, varName);
+		use();
+		glUniform1iv(varLocation, array);
+	}
+
 	public void enableAttribPointers() {
 		int offset = 0;
 		for (int i = 0; i < sizes.length; i++) {
@@ -191,6 +173,7 @@ public abstract class Shader<S extends ShaderData> {
 			glEnableVertexAttribArray(i);
 		}
 	}
+
 	public void disableAttribArrays() {
 		for (int i = 0; i < sizes.length; i++) {
 			glDisableVertexAttribArray(i);

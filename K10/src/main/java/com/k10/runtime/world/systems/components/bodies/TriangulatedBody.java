@@ -6,10 +6,10 @@ import com.google.common.collect.MultimapBuilder;
 import com.google.common.collect.SetMultimap;
 import com.k10.runtime.renderer.vertices.Vertex;
 
-public class TriangulatedBody<V extends Vertex> extends Body<V> {
-	SetMultimap<Integer, V> triangles;
-	V[] points;
-	public TriangulatedBody(V[] points) {
+public class TriangulatedBody extends Body {
+	SetMultimap<Integer, Vertex> triangles;
+	Vertex[] points;
+	public TriangulatedBody(Vertex[] points) {
 		triangles = MultimapBuilder.hashKeys().hashSetValues().build();
 		this.points = points;
 	}
@@ -23,12 +23,12 @@ public class TriangulatedBody<V extends Vertex> extends Body<V> {
 	}
 
 	@Override
-	public V[] getRenderData() {
+	public Vertex[] getRenderData() {
 		return points;
 	}
 
 	@Override
-	public V getRenderData(int index) {
+	public Vertex getRenderData(int index) {
 		// TODO Auto-generated method stub
 		return null;
 	}

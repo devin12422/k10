@@ -35,13 +35,13 @@ import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.opengl.GL;
 
 import com.k10.runtime.renderer.BatchedRenderer;
+import com.k10.runtime.renderer.Renderer;
 
 public class GlfwWindow extends WorldWindow {
 	private long glfwWindow;
-	protected BatchedRenderer renderer;
 
-	public GlfwWindow(int width, int height, String title) {
-		super(width, height, title, new BatchedRenderer());
+	public GlfwWindow(int width, int height, String title, Renderer renderer) {
+		super(width, height, title, renderer);
 	}
 
 	public void init() {

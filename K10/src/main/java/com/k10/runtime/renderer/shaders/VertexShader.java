@@ -6,8 +6,7 @@ import static org.lwjgl.opengl.GL20.*;
 import com.k10.runtime.renderer.batches.RenderBatch;
 import com.k10.runtime.renderer.vertices.Vertex;
 
-public class VertexShader<V extends Vertex> extends Shader<V> {
-	protected String vertexSource;
+public class VertexShader extends Shader {
 
 	public VertexShader(String filepath, int[] sizes) {
 		super(filepath, sizes);
@@ -35,24 +34,8 @@ public class VertexShader<V extends Vertex> extends Shader<V> {
 		}
 	}
 
-	public RenderBatch<V, ? extends VertexShader<V>> createRenderBatch() {
-		return new RenderBatch(this);
-	}
-
-	public void uploadTexture(String varName, int slot) {
-		int varLocation = glGetUniformLocation(shaderProgramID, varName);
-		use();
-		glUniform1i(varLocation, slot);
-	}
-
-	public void uploadIntArray(String varName, int[] array) {
-		int varLocation = glGetUniformLocation(shaderProgramID, varName);
-		use();
-		glUniform1iv(varLocation, array);
-	}
-
 	@Override
-	public boolean equals(Shader<V> o) {
+	public boolean equals(Shader o) {
 		if (!(o instanceof VertexShader))
 			return false;
 		return o.getFilepath() == this.filepath;

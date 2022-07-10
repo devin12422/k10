@@ -5,27 +5,26 @@ import static org.lwjgl.opengl.GL11.glClear;
 import static org.lwjgl.opengl.GL11.glClearColor;
 import java.util.Map;
 
-import com.google.common.collect.MultimapBuilder.SetMultimapBuilder;
+import com.google.common.collect.LinkedHashMultimap;
+import com.google.common.collect.Multimap;
 import com.k10.runtime.renderer.batches.RenderBatch;
 import com.k10.runtime.renderer.shaders.VertexShader;
 import com.k10.runtime.windows.GlfwWindow;
 import com.k10.runtime.world.systems.components.RendererComponent;
-import com.google.common.collect.SetMultimap;
 
 public class BatchedRenderer extends Renderer {
+	protected Multimap<Integer, RenderBatch> batches;
 	protected Map<Integer, Framebuffer> buffers;
 	protected GlfwWindow window;
 	public static final int DATA_CAP = 1024;
-	protected SetMultimap<Integer, RenderBatch<?, ?>> batches;
 
 	public BatchedRenderer() {
 		super();
-		batches = SetMultimapBuilder.hashKeys().hashSetValues().build();
+//		MutableGraph<Integer> graph = GraphBuilder.undirected().build();
+
+		batches = LinkedHashMultimap.create();
 	}
 
-	/**
-	 * @param
-	 */
 	@Override
 	public void add(RendererComponent r) {
 		if (!(r.getShader() instanceof VertexShader))
@@ -42,13 +41,13 @@ public class BatchedRenderer extends Renderer {
 				System.out.println("found");
 				return;
 			}
-			RenderBatch<?, ?> b = ((VertexShader) r.getShader()).createRenderBatch();
+			RenderBatch b = new RenderBatch(r.getShader());
 			b.start(this);
 			b.add(r);
 			batches.put(r.getZIndex(), b);
 		} else {
 			buffers.put(r.getZIndex(), new Framebuffer(window.getWidth(), window.getHeight()));
-			RenderBatch<?, ?> b = ((VertexShader) r.getShader()).createRenderBatch();
+			RenderBatch b = new RenderBatch(r.getShader());
 			b.start(this);
 			b.add(r);
 			batches.put(r.getZIndex(), b);
@@ -57,13 +56,13 @@ public class BatchedRenderer extends Renderer {
 	}
 
 	class BreakException extends RuntimeException {
-		RenderBatch<?, ?> r;
+		RenderBatch r;
 
-		BreakException(RenderBatch<?, ?> r) {
+		BreakException(RenderBatch r) {
 			this.r = r;
 		}
 
-		public RenderBatch<?, ?> getBatch() {
+		public RenderBatch getBatch() {
 			return this.r;
 		}
 	}
@@ -94,6 +93,7 @@ public class BatchedRenderer extends Renderer {
 		System.out.println("buffer" + i + " unbound");
 
 	}
+
 	public GlfwWindow getWindow() {
 		return this.window;
 	}

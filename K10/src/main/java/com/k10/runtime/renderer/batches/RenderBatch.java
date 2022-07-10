@@ -7,6 +7,7 @@ import com.google.common.collect.MultimapBuilder;
 import com.google.common.collect.SetMultimap;
 import com.k10.runtime.renderer.BatchedRenderer;
 import com.k10.runtime.renderer.Camera;
+import com.k10.runtime.renderer.shaders.Shader;
 import com.k10.runtime.renderer.shaders.VertexShader;
 import com.k10.runtime.renderer.vertices.ShaderData;
 import com.k10.runtime.renderer.vertices.Vertex;
@@ -16,18 +17,18 @@ import static org.lwjgl.opengl.GL15.*;
 import static org.lwjgl.opengl.GL30.glBindVertexArray;
 import static org.lwjgl.opengl.GL30.glGenVertexArrays;
 
-public class RenderBatch<V extends Vertex, S extends VertexShader<V>> {
-	protected S shader;
+public class RenderBatch {
+	protected Shader shader;
 	protected float[] data;
 	protected FloatBuffer t;
 	protected SetMultimap<Integer, ShaderData> datagroups;
-	protected ArrayList<RendererComponent<S>> components;
+	protected ArrayList<RendererComponent> components;
 	private boolean hasRoom;
 	private int vaoID, vboID;
 	protected Camera camera;
 	protected BatchedRenderer renderer;
 
-	public RenderBatch(S shader) {
+	public RenderBatch(Shader shader) {
 		this.shader = shader;
 		data = new float[BatchedRenderer.DATA_CAP * 3 * shader.getDataSize()];
 		components = Lists.newArrayList();
@@ -51,7 +52,7 @@ public class RenderBatch<V extends Vertex, S extends VertexShader<V>> {
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices, GL_STATIC_DRAW);
 
 		shader.enableAttribPointers();
-		
+
 	}
 
 	private int[] generateIndices() {
@@ -108,7 +109,7 @@ public class RenderBatch<V extends Vertex, S extends VertexShader<V>> {
 		return shader.equals(r.getShader()) && BatchedRenderer.DATA_CAP > datagroups.values().size();
 	}
 
-	public void add(RendererComponent<S> r) {
+	public void add(RendererComponent r) {
 
 	}
 }
